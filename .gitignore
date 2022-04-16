@@ -17,6 +17,8 @@
 *.mar
 # A common archive format used on Unix-like systems. Generally used in conjunction with compressors such as gzip, bzip2, compress or xz to create .tar.gz, .tar.bz2, .tar.Z or tar.xz files.
 *.tar
+*.zip
+*.7z
 
 # Package managers
 # Red Hat Package Manager
@@ -44,6 +46,8 @@
 *.pif
 *.vb
 *.wsf
+[Bb]in/*
+[Oo]ut/*
 
 # 3D Images
 *.3dm
@@ -67,8 +71,18 @@
 *.wmv
 *.webm
 
-### dotenv ###
+### Environments ###
 .env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Logging
+*.log
+[Ll]log/*
 
 ### Node ###
 # Logs
@@ -160,7 +174,7 @@ web_modules/
 .next
 out
 
-# Nuxt.js build / generate output
+# Next.js build / generate output
 .nuxt
 dist
 
@@ -226,6 +240,13 @@ sketch
 
 # JetBrains
 .idea/
+
+### PyCharm+iml Patch ###
+# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 # File-based project format
 *.iws
