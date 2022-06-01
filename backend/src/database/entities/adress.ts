@@ -1,6 +1,4 @@
 import * as DB from "../databaseconnection";
-import {rejects} from "assert";
-import * as QueryString from "querystring";
 
 export type adress = {
     id:number,
