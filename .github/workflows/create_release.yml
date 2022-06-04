@@ -11,8 +11,8 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME_BACKEND: ${{ github.repository }}/backend
   IMAGE_NAME_FRONTEND: ${{ github.repository }}/frontend
-  DEPLOYMENT_BACKEND: ${{ github.repository }}-backend
-  DEPLOYMENT_FRONTEND: ${{ github.repository }}-frontend
+  DEPLOYMENT_BACKEND: ${{ github.event.repository.name }}-backend
+  DEPLOYMENT_FRONTEND: ${{ github.event.repository.name }}-frontend
 
 jobs:
   prepareBuild:
@@ -35,6 +35,7 @@ jobs:
         run: |
           echo "No release label found"
           exit 1
+
       - name: Get latest Tag
         uses: actions-ecosystem/action-get-latest-tag@v1
         if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'skip-release') == false
@@ -104,6 +105,7 @@ jobs:
             type=semver,pattern=v{{major}},value=${{ env.NEW_VERSION }}
           labels: |
             org.opencontainers.image.version=${{ env.NEW_VERSION }}
+
       - name: 'Build and Push Docker image'
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
@@ -149,6 +151,7 @@ jobs:
             type=semver,pattern=v{{major}},value=${{ env.NEW_VERSION }}
           labels: |
             org.opencontainers.image.version=${{ env.NEW_VERSION }}
+
       - name: 'Build and Push Docker image'
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
@@ -176,9 +179,11 @@ jobs:
     - name: Env to lowercase
       run: |
         echo "DEPLOYMENT_FRONTEND=${DEPLOYMENT_FRONTEND,,}">>${GITHUB_ENV}
+
     - name: Restart
       run: |
         kubectl rollout restart deployment -n smartcity ${{ env.DEPLOYMENT_FRONTEND }}
+
   deployBackend:
     name: '[BACKEND] Deploy'
     runs-on: self-hosted
@@ -198,6 +203,7 @@ jobs:
     - name: Env to lowercase
       run: |
         echo "DEPLOYMENT_BACKEND=${DEPLOYMENT_BACKEND,,}">>${GITHUB_ENV}
+
     - name: Restart
       run: |
         kubectl rollout restart deployment -n smartcity ${{ env.DEPLOYMENT_BACKEND }}
