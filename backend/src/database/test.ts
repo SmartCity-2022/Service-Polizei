@@ -8,7 +8,7 @@ import {accident, createAccident, getAllAccidents} from "./entities/accident";
 async function doPoliceTest() {
     await policeTest.createPolizist("test", "test");
 
-    const policeMan: Promise<PoliceMan | null> = getPolizist("1");
+    const policeMan: Promise<PoliceMan | null> = getPolizist(1);
 
     policeMan.then((value) => console.log(value));
 }

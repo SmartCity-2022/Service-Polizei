@@ -1,18 +1,19 @@
+import {router as policemanRouter} from "./API/policeman";
+
 
 const express = require('express');
-const app = express();
-
-import * as dbconfig from "./database/databaseconnection";
+export const app = express();
 
 
-app.use(express.json());
+export async function start(port:string){
+    app.use(express.json());
+    app.use("/policeman",policemanRouter);
+    app.listen(port, () =>{
+        console.log(`listening on port ${port}`);
+    });
+}
 
-/*app.get('/',(req, res) =>{
-    res.send("hello World");
-})*/
+start("8088");
 
-app.listen(8080, () =>{
-    console.log('listening on port ${}');
-});
 
 

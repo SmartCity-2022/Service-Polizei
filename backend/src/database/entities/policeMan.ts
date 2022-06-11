@@ -6,11 +6,15 @@ export type PoliceMan = {
     Vorname:string
 }
 
-export async function getPolizist(poId: string): Promise<PoliceMan | null> {
+export async function getPolizist(poId: number): Promise<PoliceMan | null> {
     return new Promise(async(resolve,reject) => {
         let resp = await DB.query("SELECT * FROM polizist WHERE id = ?",[poId]);
         if(resp.error){
             reject(resp.error);
+            return;
+        }
+        if(resp.rows.length == 0){
+            resolve(null);
             return;
         }
         resolve({
