@@ -19,12 +19,12 @@ export async function createAccident(date:number,plz:number,ort:string,strasse:s
             console.log(test);
             if(test){
                 await getAdresseByParams(plz,ort,strasse,hausnummer).then((value)=> {
-                    value != null ? adressId = value.id : adressId = 0;
+                    value != null ? adressId = value.ID : adressId = 0;
 
                 });
             }
         }else{
-            adressId = adresstest.id;
+            adressId = adresstest.ID;
         }
 
         let resp = await DB.update("INSERT INTO Unfall(DATUM,ADRESSEN_ID) VALUES(?,?)",[date,adressId]);

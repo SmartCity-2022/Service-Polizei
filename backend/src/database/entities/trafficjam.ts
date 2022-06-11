@@ -21,12 +21,12 @@ export async function createTrafficJam(date:number,plz:number,ort:string,strasse
             console.log(test);
             if(test){
                 await getAdresseByParams(plz,ort,strasse,hausnummer).then((value)=> {
-                    value != null ? adressId = value.id : adressId = 0;
+                    value != null ? adressId = value.ID : adressId = 0;
 
                 });
             }
         }else{
-            adressId = adresstest.id;
+            adressId = adresstest.ID;
         }
 
         let resp = await DB.update("INSERT INTO Stau(DATUM,ADRESSEN_ID) VALUES(?,?)",[date,adressId]);

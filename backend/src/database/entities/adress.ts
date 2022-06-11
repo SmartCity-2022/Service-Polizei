@@ -1,12 +1,12 @@
 import * as DB from "../databaseconnection";
 
 export type adress = {
-    id:number,
-    plz:number,
-    ort:string,
-    strasse:string,
-    hausnummer?:number,
-    zusatz?:string
+    ID:number,
+    PLZ:number,
+    ORT:string,
+    STRASSE:string,
+    HAUSNUMMER?:number,
+    ZUSATZ?:string
 }
 
 export async function getAdresse(id:number): Promise<adress|null>{
@@ -17,12 +17,13 @@ export async function getAdresse(id:number): Promise<adress|null>{
             return;
         }
         resolve({
-            id: resp.rows[0].id,
-            plz: resp.rows[0].plz,
-            ort: resp.rows[0].ort,
-            strasse: resp.rows[0].strasse,
-            hausnummer: resp.rows[0].hausnummer==null? "":resp.rows[0].hausnummer,
-            zusatz: resp.rows[0].zusatz==null? "":resp.rows[0].zusatz
+            ID: resp.rows[0].ID,
+            PLZ: resp.rows[0].PLZ,
+            ORT: resp.rows[0].ORT,
+            STRASSE: resp.rows[0].STRASSE,
+            HAUSNUMMER: resp.rows[0].HAUSNUMMER==null? null:resp.rows[0].HAUSNUMMER,
+            ZUSATZ: resp.rows[0].ZUSATZ==null? "":resp.rows[0].ZUSATZ
+
         })
     })
 }
@@ -49,12 +50,12 @@ export async function getAdresseByParams(plz:number,ort:string,strasse:string,ha
         }
         console.log("SUCCESS");
         resolve({
-            id: resp.rows[0].ID,
-            plz: resp.rows[0].PLZ,
-            ort: resp.rows[0].ORT,
-            strasse: resp.rows[0].STRASSE,
-            hausnummer: resp.rows[0].HAUSNUMMER==null? "":resp.rows[0].HAUSNUMMER,
-            zusatz: resp.rows[0].ZUSATZ==null? "":resp.rows[0].ZUSATZ
+            ID: resp.rows[0].ID,
+            PLZ: resp.rows[0].PLZ,
+            ORT: resp.rows[0].ORT,
+            STRASSE: resp.rows[0].STRASSE,
+            HAUSNUMMER: resp.rows[0].HAUSNUMMER==null? null:resp.rows[0].HAUSNUMMER,
+            ZUSATZ: resp.rows[0].ZUSATZ==null? "":resp.rows[0].ZUSATZ
         });
         return;
     });

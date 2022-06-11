@@ -19,8 +19,8 @@ export async function getPolizist(poId: number): Promise<PoliceMan | null> {
         }
         resolve({
             ID: resp.rows[0].ID,
-            Name: resp.rows[0].Name,
-            Vorname: resp.rows[0].Vorname
+            Name: resp.rows[0].NAME,
+            Vorname: resp.rows[0].VORNAME
         });
     });
 }

@@ -1,23 +1,90 @@
 
 export default {
-    POLICEMAN_NOT_FOUND: {
-        status:"404",
-        description: "Polizist/in konnte nicht gefunden werden"
-    },
-    POLICEMAN_CREATION_ERRORS: {
-        status:"400",
-        NO_NAME:{
-            description: "kein Name fuer den Polizisten angegeben"
+    general:"something went wrong",
+    POLICEMAN:{
+        POLICEMAN_NOT_FOUND: {
+            status:404,
+            description: "Polizist/in konnte nicht gefunden werden"
         },
-        NO_FIRSTNAME: {
-            description: "kein Vorname fuer den Polizisten angegeben"
+        POLICEMAN_NO_ID_FOUND: {
+            status:400,
+            description: "keine Polizisten-ID gefunden"
         },
-        IS_EMPTY: {
-            description: "die Anfrage ist leer"
+        POLICEMAN_CREATION_ERRORS: {
+            status:400,
+            NO_NAME:{
+                status:400,
+                description: "kein Name fuer den Polizisten angegeben"
+            },
+            NO_FIRSTNAME: {
+                status:400,
+                description: "kein Vorname fuer den Polizisten angegeben"
+            },
+            IS_EMPTY: {
+                status:400,
+                description: "die Anfrage ist leer"
+            }
         }
-    },
-    POLICEMAN_NO_ID_FOUND: {
-        status:"400",
-        description: "keine Polizisten-ID gefunden"
+    }, ADRESSES:{
+        ADRESS_NOT_FOUND: {
+            status:404,
+            description:"Adresse nicht gefunden"
+        },
+        ADRESS_ID_NOT_FOUND:{
+            status:400,
+            description:"keine Adressen-ID gefunden"
+        },
+        ADRESS_CREATION_ERRORS:{
+            status:400,
+            general:"something went wrong",
+            NO_PLZ:{
+                status:400,
+                description:"keine PLZ angegeben"
+            },
+            NO_LOCATION:{
+                status:400,
+                description:"keinen Ort angegeben"
+            },
+            NO_STREET:{
+                status:400,
+                description:"keine Strasse angegeben"
+            },
+            WRONG_TYPE_FOR_HOUSENUMBER:{
+                status:400,
+                description:"ungultige Hausnummer"
+            },
+            IS_EMPTY: {
+                status:400,
+                description: "die Anfrage ist leer"
+            }
+        },
+        ADRESS_BY_PARAMS_ERRORS:{
+            status:400,
+            NO_PLZ:{
+                status:400,
+                description:"keine PLZ angegeben"
+            },
+            NO_LOCATION:{
+                status:400,
+                description:"keinen Ort angegeben"
+            },
+            NO_STREET:{
+                status:400,
+                description:"keine Strasse angegeben"
+            },
+            WRONG_TYPE_FOR_HOUSENUMBER:{
+                status:400,
+                description:"ungultige Hausnummer"
+            },
+            IS_EMPTY: {
+                status:400,
+                description: "die Anfrage ist leer"
+            },
+            NOT_FOUND: {
+                status:404,
+                description: "Adresse nicht gefunden"
+            }
+        }
     }
+
 }
