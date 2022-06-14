@@ -36,7 +36,7 @@ import * as config from "./database.json";
 
 const pool : MySQL.Pool = MySQL.createPool({
     host: config.host,
-    port: config.port as unknown as number,
+    port: config.port,
     user: config.username,
     password: config.password,
     database: config.database,

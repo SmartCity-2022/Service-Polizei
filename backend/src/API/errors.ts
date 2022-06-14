@@ -85,6 +85,24 @@ export default {
                 description: "Adresse nicht gefunden"
             }
         }
+    },
+    ACCIDENTS:{
+        ACCIDENT_ID_NOT_FOUND:{
+            status:404,
+            description: "Unfall mit dieser ID konnte nicht gefunden werden"
+        },
+        ACCIDENT_CREATION_ERRORS:{
+            INVALID_DATE:{
+                status:400,
+                description:"ungueltiges Datum"
+            },
+            INVALID_BODY:{
+                status:400,
+                description:"kein Body gefunden"
+            },
+
+
+        }
     }
 
 }
