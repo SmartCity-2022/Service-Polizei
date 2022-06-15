@@ -103,6 +103,22 @@ export default {
 
 
         }
+    },
+    TRAFFIC_JAMS:{
+        TRAFFIC_JAM_ID_NOT_FOUND:{
+            status:404,
+            description: "Unfall mit dieser ID konnte nicht gefunden werden"
+        },
+        TRAFFIC_JAM_CREATION_ERRORS:{
+            INVALID_DATE:{
+                status:400,
+                description:"ungueltiges Datum"
+            },
+            INVALID_BODY:{
+                status:400,
+                description:"kein Body gefunden"
+            },
+        }
     }
 
 }

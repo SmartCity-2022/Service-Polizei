@@ -1,6 +1,6 @@
-import * as DB from "../database/entities/accident"
+import * as DB from "../database/entities/trafficjam"
 import {Response, Request, Router} from "express";
-import {accident} from "../database/entities/accident";
+import {trafficjam} from "../database/entities/trafficjam";
 import errors from "./errors";
 
 export const router:Router = Router();
@@ -8,7 +8,7 @@ export const router:Router = Router();
 router.get("/:id",async(req:Request,res:Response)=>{
     const id:number = Number(req.params.id);
     if(!isNaN(id)){
-        const resp:accident|null = await DB.getAccident(id);
+        const resp:trafficjam|null = await DB.getTrafficJam(id);
         if(resp){
             res.status(200).json(resp);
             return;
@@ -20,11 +20,6 @@ router.get("/:id",async(req:Request,res:Response)=>{
     res.status(400).json(errors.general);
 })
 
-router.get("/", async(req:Request, res:Response) =>{
-    const resp:accident[]|null = await DB.getAllAccidents();
-    res.status(200).json(resp);
-})
-
 router.post("/create",async(req:Request,res:Response)=>{
     if(!req.body){
         res.status(errors.ACCIDENTS.ACCIDENT_CREATION_ERRORS.INVALID_BODY.status)
@@ -33,7 +28,7 @@ router.post("/create",async(req:Request,res:Response)=>{
     }
     const body = req.body;
 
-    let resp = await DB.createAccident(body.DATE,body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
+    let resp = await DB.createTrafficJam(body.DATE,body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
     if(resp){
         res.status(200).json(resp);
     }
