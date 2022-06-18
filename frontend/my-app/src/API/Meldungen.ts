@@ -9,9 +9,9 @@ export type accident={
 export async function getAllAccidents():Promise<accident[]|null>{
     return new Promise(async(resolve,reject)=>{
         let resp:Response = await fetch("http://127.0.0.1:8088/accidents/",{
-            mode: "no-cors",
             method:"GET",
         });
-        console.log(resp.body);
+        console.log(resp.json());
+
     })
 }

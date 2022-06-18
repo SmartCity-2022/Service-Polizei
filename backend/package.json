@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "amqplib": "^0.10.0",
+    "cors": "^2.8.5",
     "mysql": "^2.18.1",
     "node": "^17.7.2",
     "react-window": "^1.8.7"

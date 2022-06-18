@@ -3,8 +3,15 @@ import {router as adressRouter} from "./API/adress";
 import {router as accidentRouter} from "./API/accident"
 import rabbitMQConfig from "./rabbitMQConfig";
 
+const cors = require("cors");
 const express = require('express');
 let port = "8088";
+
+const corsOptions={
+    origin: "*",
+    credentials: true,
+    optionSucessStatus: 200
+}
 
 export const app = express();
 const amqp = require("amqplib/callback_api");
@@ -38,6 +45,7 @@ amqp.connect(`amqp://${rabbitMQConfig.USER}:${rabbitMQConfig.PASSWORD}@${rabbitM
 
 export async function start(port:string){
     app.use(express.json());
+    app.use(cors(corsOptions));
     app.use("/policeman",policemanRouter);
     app.use("/adresses",adressRouter);
     app.use("/accidents",accidentRouter);
