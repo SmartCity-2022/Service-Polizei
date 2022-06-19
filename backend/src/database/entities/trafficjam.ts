@@ -18,7 +18,6 @@ export async function createTrafficJam(date:number,plz:number,ort:string,strasse
         let adressId = 0;
         if(adresstest == null){
             let test = await createAdresse(plz,ort,strasse,hausnummer,zusatz);
-            console.log(test);
             if(test){
                 await getAdresseByParams(plz,ort,strasse,hausnummer).then((value)=> {
                     value != null ? adressId = value.ID : adressId = 0;

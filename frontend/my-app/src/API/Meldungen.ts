@@ -12,6 +12,5 @@ export async function getAllAccidents():Promise<accident[]|null>{
             method:"GET",
         });
         console.log(resp.json());
-
     })
 }
