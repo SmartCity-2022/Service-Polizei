@@ -1,5 +1,4 @@
 import MySQL from "mysql";
-import * as fs from "fs";
 
 
 export type DBconfig = {
@@ -30,26 +29,18 @@ type UpdateResponse = {
     rows?:any
 }
 
-//export const config: DBconfig = JSON.parse(fs.readFileSync("./database/database.json","utf-8"));
-import * as config from "./database.json";
+import config from "../config";
 
 
 const pool : MySQL.Pool = MySQL.createPool({
-    host: config.host,
-    port: config.port,
-    user: config.username,
-    password: config.password,
-    database: config.database,
-    connectionLimit: config.connectionLimit,
-    supportBigNumbers: config.supportBigNumbers
+    host: config.DATABASE.HOST,
+    port: config.DATABASE.PORT,
+    user: config.DATABASE.USERNAME,
+    password: config.DATABASE.PASSWORD,
+    database: config.DATABASE.DATABASE,
+    connectionLimit: config.DATABASE.CONNECTIONLIMIT,
+    supportBigNumbers: config.DATABASE.SUPPORTBIGNUMBERS
 })
-
-
-/*export async function setup(): Promise<void> {
-    return new Promise<void>(async (resolve,reject) =>{
-        for(const script of create)
-    })
-}*/
 
 export async function query(sql : string, params : any[]) : Promise<QueryResponse> {
     return new Promise<any>(async (resolve,reject) => {

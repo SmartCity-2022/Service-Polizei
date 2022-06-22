@@ -1,9 +1,0 @@
-{
-  "host": "127.0.0.1",
-  "port": 3306,
-  "username": "polizei",
-  "password": "|sJ{@2tOXw*edi1XU0CD=t//r2X/mPS",
-  "database": "polizei",
-  "supportBigNumbers": true,
-  "connectionLimit": 10
-}
