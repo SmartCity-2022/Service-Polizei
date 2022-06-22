@@ -1,9 +1,9 @@
 import * as DB from "../database/entities/adress"
 import {Response, Request, Router} from "express";
 import {adress, createAdresse, getAdresseByParams} from "../database/entities/adress";
-import {amqpChannel} from "../server";
+
 import errors from "./errors";
-import rabbitMQConfig from "../rabbitMQConfig";
+
 
 export const router:Router = Router();
 
@@ -47,7 +47,7 @@ router.post('/create',async(req:Request,res:Response)=>{
         return
     }
     res.status(200).json(resp);
-    amqpChannel.publish(rabbitMQConfig.EXCHANGE_NAME,rabbitMQConfig.ROUTINGKEYS.ADRESS.CREATE_ADRESS,Buffer.from(JSON.stringify(resp)));
+
 })
 
 

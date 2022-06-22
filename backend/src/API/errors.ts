@@ -119,6 +119,64 @@ export default {
                 description:"kein Body gefunden"
             },
         }
+    },
+    WANTED_PERSON:{
+        WANTED_PERSON_ID_NOT_FOUND:{
+            status:404,
+            description:"gesuchte-Personen-ID nicht gefunden"
+        },
+        WANTED_PERSON_CREATION_ERRORS:{
+            INVALID_BODY: {
+                status: 400,
+                description: "kein body angegeben"
+            }
+        }
+    },
+    REPORT:{
+        REPORT_ID_NOT_FOUND:{
+            status:404,
+            description:"gesuchte-Anzeigen-ID nicht gefunden"
+        },
+        REPORT_CREATION_ERRORS:{
+            INVALID_BODY:{
+                status: 400,
+                description: "kein Body angegeben"
+            },
+            NO_PLZ:{
+                status:400,
+                description:"keine PLZ angegeben"
+            },
+            NO_LOCATION:{
+                status:400,
+                description:"keinen Ort angegeben"
+            },
+            NO_STREET:{
+                status:400,
+                description:"keine Strasse angegeben"
+            },
+            WRONG_TYPE_FOR_HOUSENUMBER:{
+                status:400,
+                description:"ungultige Hausnummer"
+            },
+            INVALID_EMAIL:{
+                status:400,
+                description:"ungültige Email-Adresse"
+            },
+            INVALID_NAME:{
+                status:400,
+                description:"ungültiger Name der angezeigten Person"
+            },
+            INVALID_FIRST_NAME:{
+                status:400,
+                description:"ungültiger Vorname der angezeigten Person"
+            },
+            INVALID_DATE:{
+                status:400,
+                description:"ungültiges Datum"
+            },
+
+
+        }
     }
 
 }

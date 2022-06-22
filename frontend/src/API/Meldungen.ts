@@ -1,4 +1,4 @@
-const APIENDPOINT = "https://127.0.0.1:8088/accidents"
+import config from "../config";
 
 export type accident={
     ID:number,
@@ -8,9 +8,11 @@ export type accident={
 
 export async function getAllAccidents():Promise<accident[]|null>{
     return new Promise(async(resolve,reject)=>{
-        let resp:Response = await fetch("http://127.0.0.1:8088/accidents/",{
+        let resp:Response = await fetch(config.BACKEND_ADDRESS+config.API_ENDPOINTS.ACCIDENTS,{
             method:"GET",
         });
-        console.log(resp.json());
+        resolve(resp.json());
     })
 }
+
+
