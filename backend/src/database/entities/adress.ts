@@ -31,7 +31,7 @@ export async function getAdresse(id:number): Promise<adress|null>{
 export async function getAdresseByParams(plz:number,ort:string,strasse:string,hausnummer?:number):Promise<adress|null>{
     console.log("TEST");
     return new Promise(async(resolve,reject)=>{
-        let query = "SELECT * FROM adresse WHERE PLZ=? AND ORT=? AND STRASSE=?";
+        let query = "SELECT * FROM Adresse WHERE PLZ=? AND ORT=? AND STRASSE=?";
         let params =[plz,ort,strasse]
         if(hausnummer != undefined){
             query += "AND HAUSNUMMER =?";

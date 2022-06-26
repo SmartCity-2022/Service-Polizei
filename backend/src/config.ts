@@ -18,7 +18,7 @@ export default{
         HOST: "127.0.0.1",
         PORT: 3306,
         USERNAME: "polizei",
-        PASSWORD: "|sJ{@2tOXw*edi1XU0CD=t//r2X/mPS",
+        PASSWORD: "123456798",
         DATABASE: "polizei",
         SUPPORTBIGNUMBERS: true,
         CONNECTIONLIMIT: 10

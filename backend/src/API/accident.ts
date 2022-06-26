@@ -1,6 +1,6 @@
 import * as DB from "../database/entities/accident"
 import {Response, Request, Router} from "express";
-import {accident} from "../database/entities/accident";
+import {accident, fullAccident} from "../database/entities/accident";
 import errors from "./errors";
 
 export const router:Router = Router();
@@ -20,10 +20,18 @@ router.get("/:id",async(req:Request,res:Response)=>{
     res.status(400).json(errors.general);
 })
 
+
 router.get("/", async(req:Request, res:Response) =>{
     const resp:accident[]|null = await DB.getAllAccidents();
     res.status(200).json(resp);
 })
+
+
+router.get("/full/all", async(req:Request, res:Response) =>{
+    const resp:any|null = await DB.getFullAccidents();
+    res.status(200).json(resp);
+})
+
 
 router.post("/create",async(req:Request,res:Response)=>{
     if(!req.body){
@@ -32,8 +40,8 @@ router.post("/create",async(req:Request,res:Response)=>{
         return;
     }
     const body = req.body;
-
-    let resp = await DB.createAccident(body.DATE,body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
+    let time:Date = new Date();
+    let resp = await DB.createAccident(time.getTime()-(time.getTimezoneOffset()*60000),body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
     if(resp){
         res.status(200).json(resp);
     }

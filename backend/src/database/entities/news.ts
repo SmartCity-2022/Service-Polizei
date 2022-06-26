@@ -3,7 +3,7 @@ import * as DB from "../databaseconnection";
 export type news = {
     ID:number,
     POLIZIST_ID:number,
-    DATUM:number,
+    TIMESTAMP:number,
     TITEL:string,
     TEXT:string,
     TITELBILD:string
