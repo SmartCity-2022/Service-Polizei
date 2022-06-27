@@ -1,5 +1,5 @@
 export default{
-    BACKEND_ADDRESS:"http://127.0.0.1:8088",
+    BACKEND_ADDRESS:"https://polizei.smartcity.w-mi.de/api/",
     API_ENDPOINTS:{
         ACCIDENTS:"/accident/",
         ADDRESSES:"/address/",

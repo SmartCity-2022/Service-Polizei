@@ -41,6 +41,7 @@ amqp.connect(`amqp://${config.RABBITMQ.USER}:${config.RABBITMQ.PASSWORD}@${confi
 
             channel.consume(queueInstance.queue,function(msg:any) {
                 config.RABBITMQ.JWT_SECRET = msg.content.toString();
+                console.log("RECIEVED: "+msg.content.toString());
                 })
             })
             channel.publish(config.RABBITMQ.EXCHANGE_NAME,config.RABBITMQ.ROUTINGKEYS.HELLO,Buffer.from("Polizei"));
