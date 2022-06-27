@@ -29,7 +29,7 @@ export async function createPolizist(Name: string,Vorname: string): Promise<bool
     return new Promise(async(resolve,reject) => {
         let resp = await DB.update("INSERT INTO Polizist (NAME,VORNAME) VALUES(?,?)",[Name,Vorname]);
         if(resp.error){
-            reject(resp.error);
+            reject(resp.error_message);
             return;
         }else {
             resolve(resp.affectedRows > 0);

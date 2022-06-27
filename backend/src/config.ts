@@ -1,6 +1,6 @@
 export default{
     RABBITMQ:{
-        EXCHANGE_NAME:"service_polizei",
+        EXCHANGE_NAME:"service",
         DOMAIN:"127.0.0.1",
         PORT:"5672",
         USER:"guest",
@@ -18,7 +18,7 @@ export default{
         HOST: "127.0.0.1",
         PORT: 3306,
         USERNAME: "polizei",
-        PASSWORD: "|sJ{@2tOXw*edi1XU0CD=t//r2X/mPS",
+        PASSWORD: "123456798",
         DATABASE: "polizei",
         SUPPORTBIGNUMBERS: true,
         CONNECTIONLIMIT: 10

@@ -16,9 +16,9 @@ export const Navbar = () => {
                        POLIZEI
                    </Typography>
                     <Stack direction='row'>
-                        <Link to="/Notruf">Notruf</Link>
-                        <Link to="/">Aktuelle Meldungen</Link>
-                        <Link to="/Anzeigen">Anzeigen</Link>
+                        <Link to="/Notruf" style={{margin:4}}>Notruf</Link>
+                        <Link to="/" style={{margin:4}}>Aktuelle Meldungen</Link>
+                        <Link to="/Anzeigen" style={{margin:4}}>Anzeigen</Link>
                     </Stack>
                 </Toolbar>
             </AppBar>

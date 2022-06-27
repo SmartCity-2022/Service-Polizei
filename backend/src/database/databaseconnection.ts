@@ -59,7 +59,7 @@ export async function update(sql : string, params: any[]): Promise<UpdateRespons
         pool.query(sql, params, (err,result) => {
             if(err){
                 resolve({error: true, error_message: err.message, fieldCount: 0, affectedRows: 0,insertId: 0,warningCount:0,message:" ",changedRows:0});
-                console.log(err.message);
+                console.log(err);
             }else{
                 resolve({error: false, error_message: "", fieldCount: result.fieldCount, affectedRows: result.affectedRows,insertId: result.insertId,warningCount:result.warningCount,message:result.message,changedRows:result.changedRows,rows:result});
             }

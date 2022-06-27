@@ -4,11 +4,22 @@ import {getAdresse, createAdresse, getAdresseByParams,adress} from "./adress";
 
 export type accident={
     ID:number,
-    DATE:number,
+    TIMESTAMP:number,
     ADRESSEN_ID:number,
 }
 
-export async function createAccident(date:number,plz:number,ort:string,strasse:string,hausnummer?:number,zusatz?:string):Promise<boolean>{
+
+export type fullAccident={
+    ID:number,
+    TIMESTAMP:number,
+    PLZ:number,
+    WOHNORT:string,
+    STRASSE:string,
+    HAUSNUMMER?:number,
+    ZUSATZ?:string
+}
+
+export async function createAccident(timestamp:number,plz:number,ort:string,strasse:string,hausnummer?:number,zusatz?:string):Promise<boolean>{
     return new Promise(async(resolve,reject)=>{
 
         let adresstest:adress | null = await getAdresseByParams(plz,ort,strasse,hausnummer);
@@ -27,7 +38,7 @@ export async function createAccident(date:number,plz:number,ort:string,strasse:s
             adressId = adresstest.ID;
         }
 
-        let resp = await DB.update("INSERT INTO Unfall(DATUM,ADRESSEN_ID) VALUES(?,?)",[date,adressId]);
+        let resp = await DB.update("INSERT INTO Unfall(TIMESTAMP,ADRESSEN_ID) VALUES(?,?)",[timestamp,adressId]);
         if(resp.error){
             reject(resp.error);
             return;
@@ -41,14 +52,15 @@ export async function getAccident(id:number):Promise<accident|null>{
         let resp = await DB.query("SELECT * FROM Unfall WHERE ID = ?",[id]);
         if(resp.error){
             reject(resp.error_message);
-            return
+            return;
         }
         if(resp.rows.length == 0){
-            return null;
+            reject(null)
+            return;
         }
         resolve({
             ID: resp.rows[0].ID,
-            DATE: resp.rows[0].DATUM,
+            TIMESTAMP: resp.rows[0].TIMESTAMP,
             ADRESSEN_ID: resp.rows[0].ADRESSEN_ID
         })
     });
@@ -57,6 +69,24 @@ export async function getAccident(id:number):Promise<accident|null>{
 export async function getAllAccidents():Promise<accident[]|null>{
     return new Promise(async(resolve,reject)=> {
         let resp = await DB.query("SELECT * FROM Unfall", []);
+        if(resp.error){
+            reject(resp.error_message);
+            return;
+        }
+        if(resp.rows.length == 0){
+            resolve(null);
+            return;
+        }
+        resolve(
+            resp.rows
+        );
+    })
+}
+
+
+export async function getFullAccidents():Promise<fullAccident[]|null>{
+    return new Promise(async(resolve,reject)=> {
+        let resp = await DB.query("SELECT * FROM Unfall,Adresse WHERE Unfall.ADRESSEN_ID = Adresse.ID", []);
         if(resp.error){
             reject(resp.error_message);
             return;
