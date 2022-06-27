@@ -34,7 +34,7 @@ import config from "../config";
 
 const pool : MySQL.Pool = MySQL.createPool({
     host: config.DATABASE.HOST,
-    port: 3306,
+    port: config.DATABASE.PORT,
     user: config.DATABASE.USERNAME,
     password: config.DATABASE.PASSWORD,
     database: config.DATABASE.DATABASE,
