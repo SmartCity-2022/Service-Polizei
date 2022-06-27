@@ -5,6 +5,7 @@ import {router as accidentRouter} from "./API/accident";
 import {router as trafficJamRouter} from "./API/trafficjam";
 import {router as reportRouter} from "./API/report";
 import {router as wantedPersonRouter} from "./API/wanted_Person";
+import {router as newsRouter} from "./API/news"
 
 import config from "./config";
 
@@ -58,6 +59,7 @@ export async function start(port:number){
     app.use("/trafficJam",trafficJamRouter);
     app.use("/report",reportRouter);
     app.use("/wantedPerson",wantedPersonRouter);
+    app.use("/news",newsRouter);
 
     app.listen(port, () =>{
         console.log(`listening on port ${port}`);

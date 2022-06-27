@@ -22,6 +22,17 @@ export type traffic_jam={
 }
 
 
+export type news={
+    ID:number,
+    TIMESTAMP:number,
+    TITEL:string,
+    TEXT:string,
+    TITELBILD:string,
+    NAME:string,
+    VORNAME:string
+}
+
+
 export async function getFullAccidents():Promise<accident[]|null>{
     return new Promise(async(resolve,reject)=>{
         let resp = await (await fetch(config.BACKEND_ADDRESS + config.API_ENDPOINTS.ACCIDENTS+"/full/all", {
@@ -38,6 +49,17 @@ export async function getFullTraffic_Jams():Promise<traffic_jam[]|null>{
         let resp = await (await fetch(config.BACKEND_ADDRESS + config.API_ENDPOINTS.TRAFFIC_JAM+"/full/all", {
             method: "GET",
         })).json() as traffic_jam[];
+
+        resolve(resp);
+    })
+}
+
+
+export async function getAllNews():Promise<news[]|null>{
+    return new Promise(async(resolve,reject)=>{
+        let resp = await(await fetch(config.BACKEND_ADDRESS+config.API_ENDPOINTS.NEWS+"/",{
+            method:"GET"
+        })).json() as news[];
 
         resolve(resp);
     })

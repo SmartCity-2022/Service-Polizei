@@ -1,15 +1,20 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {createAccident, createTrafficJam, getFullAccidents, getFullTraffic_Jams, traffic_jam} from "../API/Meldungen";
+import {
+    createAccident,
+    createTrafficJam,
+    getAllNews,
+    getFullAccidents,
+    getFullTraffic_Jams,
+    traffic_jam,
+    news
+} from "../API/Meldungen";
 import {Button, Stack, Card ,TextField } from "@mui/material";
 import {Modal} from "@mui/material";
 import {accident} from "../API/Meldungen";
 import {useEffect, useRef, useState} from "react";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
 
-interface HandlePLZINPUTParams {
-    event: any;
-}
 
 export default function Meldungen() {
 
@@ -35,17 +40,35 @@ export default function Meldungen() {
     }]);
 
 
+    const[newsData,setNewsData]= useState([{
+        id:0,
+        UHRZEIT:" ",
+        TITEL:" "
+    }])
+
+    const[fullNewsData,setFullNewsData] = useState([{
+        id:0,
+        UHRZEIT:" ",
+        TITEL:" ",
+        TEXT:" ",
+        TITELBILD:" ",
+        NAME:" ",
+        VORNAME:" "
+    }
+    ])
+
     useEffect( ()=>{
         async function getData(){
             let accResp:accident[]|null = await getFullAccidents();
             let trfResp:traffic_jam[]|null = await getFullTraffic_Jams();
+            let newsResp:news[]|null = await getAllNews();
 
             if (accResp) {
 
                 let accdata = [];
                 if (accResp != undefined) {
                     for (let i: number = 0; i < accResp.length; i++) {
-                        console.log(accResp[i]);
+
                         let date = new Date(accResp[i].TIMESTAMP);
                         let time = date.toUTCString().slice(-12,-4);
                         accdata.push({
@@ -78,6 +101,32 @@ export default function Meldungen() {
                     }
                 }
                 setTrfVal(trfjData);
+
+                let newsData = []
+                let newsDataForCols = []
+                if(newsResp != undefined){
+                    for (let i:number = 0;i< newsResp.length;i++){
+                        let date = new Date(newsResp[i].TIMESTAMP);
+                        let time = date.toUTCString().slice(-12,-4);
+                        newsData.push({
+                            id:newsResp[i].ID,
+                            UHRZEIT:time,
+                            TITEL:newsResp[i].TITEL,
+                            TEXT:newsResp[i].TEXT,
+                            TITELBILD:newsResp[i].TITELBILD,
+                            NAME:newsResp[i].NAME,
+                            VORNAME:newsResp[i].VORNAME
+                        })
+                        newsDataForCols.push({
+                            id:newsResp[i].ID,
+                            UHRZEIT:time,
+                            TITEL:newsResp[i].TITEL
+                        })
+                    }
+                    setNewsData(newsDataForCols);
+
+                    setFullNewsData(newsData);
+                }
         }
         getData();
     },[]);
@@ -121,10 +170,30 @@ export default function Meldungen() {
             width:columnWidth
         },
 
+    ];
+
+    const newsColumns: GridColDef[] =[
+        {
+            field:"id",
+            headerName:"id",
+            width:120
+        },
+        {
+            field:"UHRZEIT",
+            headerName:"UHRZEIT",
+            width:120
+        },
+        {
+            field:"TITEL",
+            headerName:"TITEL",
+            width:400
+        },
     ]
 
     const [accidentModalOpen,setAccOpen] = useState(false);
     const [trafficJamModalOpen,setTrfjOpen] = useState(false);
+    const [newsModalOpen,setNewsOpen] = useState(false);
+    const handleNewsClose = () => setNewsOpen(false);
     const handleAccClose = () =>  setAccOpen(false);
     const handleTrfJClose = () => setTrfjOpen(false);
 
@@ -134,6 +203,16 @@ export default function Meldungen() {
     const [STRASSEinput,setSTRASSE] = useState(" ");
     const [HAUSNUMMERinput,setHAUSNUMMER] = useState(0);
     const [ZUSATZinput,setZUSATZ] = useState(" ");
+
+    const [currentNewsData,setCurrentNewsData] = useState({
+        id:0,
+        UHRZEIT:" ",
+        TITEL:" ",
+        TEXT:" ",
+        TITELBILD:" ",
+        NAME:" ",
+        VORNAME:" "
+    })
 
 
     return (
@@ -208,8 +287,35 @@ export default function Meldungen() {
                     </div>
                 </Modal>
             </div>
+            <div>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={newsModalOpen}
+                    onClose={handleNewsClose}
+                >
+                    <div style={{alignContent:"center"}}>
+                        <Box alignItems = "center" justifyContent="center">
+                            <Card sx={{ height: "60%", width: '50%' }}>
+                                <h3>
+                                    {currentNewsData.TITEL}
+                                </h3>
+                                <h4>
+                                    {currentNewsData.UHRZEIT}
+                                </h4>
+                                    {currentNewsData.TEXT}
+                                <br/>
+                                <br/>
+                                <a>
+                                    Geschrieben von {currentNewsData.VORNAME.slice(0,1)}.{currentNewsData.NAME}
+                                </a>
+                            </Card>
+                        </Box>
+                    </div>
+                </Modal>
+            </div>
             <Stack direction="row">
-                <Card sx={{ height: "60%", width: '45%' ,m:"2"}}>
+                <Card sx={{ height: "60%", width: "45%" ,marginX:"auto"}}>
                     <h2>UNFÄLLE</h2>
                     <Box sx={{ height: 400, width: '100%' }}>
                         <DataGrid
@@ -223,7 +329,7 @@ export default function Meldungen() {
                         UNFALL MELDEN
                     </Button>
                 </Card>
-                <Card sx={{ height: "60%", width: '45%' ,m:"2"}}>
+                <Card sx={{ height: "60%", width: '45%' ,marginX:"auto"}}>
                     <h2>STAUSS</h2>
                     <Box sx={{ height: 400, width: '100%' }}>
                         <DataGrid
@@ -238,6 +344,28 @@ export default function Meldungen() {
                     </Button>
                 </Card>
             </Stack>
+            <Card sx={{ height: "60%", width: '45%' ,m:"auto",marginY:10}}>
+                <h2>NEUIGKEITEN</h2>
+                <Box sx={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                        rows={newsData}
+                        columns={newsColumns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        onRowClick={(e)=>{
+
+                            let currentData = fullNewsData.at(Number(e.id)-1);
+                            if(currentData != undefined)
+                                setCurrentNewsData(currentData);
+                                console.log(currentData);
+                            setNewsOpen(true);
+
+                        }}
+                    />
+                </Box>
+            </Card>
         </>
     );
 }
+
+

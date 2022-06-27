@@ -5,6 +5,7 @@ export type news = {
     POLIZIST_ID:number,
     TIMESTAMP:number,
     TITEL:string,
+    PO_ID:number,
     TEXT:string,
     TITELBILD:string
 }
@@ -12,7 +13,7 @@ export type news = {
 
 export async function createNews(polizist_id:number,datum:number,titel:string,text:string,titelbild:string):Promise<boolean>{
     return new Promise(async(resolve,reject)=>{
-        let resp = await DB.update("INSERT INTO Neuigkeit(POLIZIST_ID,DATUM,TITEL,TEXT,TITELBILD) VALUES(?,?,?,?,?)",[polizist_id,datum,titel,text,titelbild]);
+        let resp = await DB.update("INSERT INTO Neuigkeit(POLIZIST_ID,TIMESTAMP,TITEL,TEXT,TITELBILD) VALUES(?,?,?,?,?)",[polizist_id,datum,titel,text,titelbild]);
         if(resp.error){
             reject(resp.error_message);
             return;
@@ -36,7 +37,7 @@ export async function deleteNews(id:number):Promise<boolean>{
 
 export async function getAllNews():Promise<news[]|null>{
     return new Promise(async(resolve,reject)=>{
-        let resp = await DB.query("SELECT * FROM Neuigkeit",[]);
+        let resp = await DB.query("SELECT * FROM Neuigkeit,Polizist WHERE Neuigkeit.POLIZIST_ID = Polizist.ID",[]);
         if(resp.error){
             reject(resp.error_message);
         }
@@ -44,7 +45,7 @@ export async function getAllNews():Promise<news[]|null>{
             resolve(null);
             return;
         }
-        resolve(resp.rows[0]);
+        resolve(resp.rows);
     })
 }
 

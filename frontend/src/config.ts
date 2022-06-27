@@ -4,6 +4,7 @@ export default{
     API_ENDPOINTS:{
         ACCIDENTS:"/accident/",
         ADDRESSES:"/address/",
-        TRAFFIC_JAM:"/trafficJam/"
+        TRAFFIC_JAM:"/trafficJam/",
+        NEWS:"/news/"
     }
 }
