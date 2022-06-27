@@ -41,7 +41,7 @@ export async function getAllNews():Promise<news[]|null>{
         if(resp.error){
             reject(resp.error_message);
         }
-        if(resp.rows[0].length == 0){
+        if(resp.rows.length == 0){
             resolve(null);
             return;
         }
