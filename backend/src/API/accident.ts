@@ -41,7 +41,7 @@ router.post("/create",async(req:Request,res:Response)=>{
     }
     const body = req.body;
     let time:Date = new Date();
-    let resp = await DB.createAccident(time.getTime()-(time.getTimezoneOffset()*60000),body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
+    let resp = await DB.createAccident(time.getTime(),body.PLZ,body.ORT,body.STRASSE,body.HAUSNUMMER,body.ZUSATZ);
     if(resp){
         res.status(200).json(resp);
     }
