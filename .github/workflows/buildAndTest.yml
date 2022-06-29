@@ -1,0 +1,58 @@
+name: Build & Test
+
+on:
+  pull_request:
+    branches: [ 'master' ]
+
+env:
+  IMAGE_NAME_FRONTEND_TAG: ${{ github.repository }}/frontend:test
+  IMAGE_NAME_BACKEND_TAG: ${{ github.repository }}/backend:test
+
+jobs:
+  buildFrontend:
+    name: '[FRONTEND] Build & Test '
+    runs-on: ubuntu-latest
+    steps:
+      - name: Frontend Env to Lowercase
+        run: |
+          echo "FRONTEND_TAG=${IMAGE_NAME_FRONTEND_TAG,,}">>${GITHUB_ENV}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+        
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./frontend
+          load: true
+          tags: ${{ env.FRONTEND_TAG }}
+          
+  buildBackend:
+    name: '[BACKEND] Build & Test '
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Backend Env to Lowercase
+        run: |
+          echo "BACKEND_TAG=${IMAGE_NAME_BACKEND_TAG,,}">>${GITHUB_ENV}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+        
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Build Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./backend
+          load: true
+          tags: ${{ env.BACKEND_TAG }}
